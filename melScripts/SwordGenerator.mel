@@ -1,0 +1,389 @@
+
+
+
+
+/*                                 INSTRUCTIONS                                         */
+
+
+
+
+int $randomBlade = 1; // Set to 1 for random choice blade, 0 for specific choice of $bladeType
+int $specificBlade = 0; // If $randomBlade == 0 then choose a number between 0-2 for your $bladeType
+
+int $randomHandle = 1; // Set to 1 for random choice handle, 0 for specific choice of $handleType
+int $specificHandle = 0; // If $randomHandle == 0 then choose a number between 0-2 for your $handleType
+
+// Once the desired values have been assigned above then select entire code and send to Maya
+// Delete any blades or handles in maya before running code again
+
+
+/*                        ALL THE COOL STUFF HAPPENS BELOW                             */
+
+
+
+
+int $bladeType; // Define $bladeType as a global variable
+int $handleType; // Define $handleType as a global variable
+
+// Check to see if sword selection is random or not
+if ($randomBlade)
+{
+    // If $randomBlade is true (1), choose a random blade type between 0 and 2
+    int $Min = 0;
+    int $Max = 2;
+    $bladeType = `rand $Min $Max`;
+}
+else
+{
+    $bladeType = $specificBlade;
+}
+if ($randomHandle)
+{
+    // If $randomHandle is true (1), choose a random handle type between 0 and 2
+    int $Min = 1;
+    int $Max = 3;
+    $handleType = `rand $Min $Max`;
+}
+else
+{
+    $handleType = $specificHandle;
+}
+
+// Start the blade creation
+createBlade();
+
+global proc createBlade()
+{
+    global int $bladeType; // Access the global $bladeType variable
+
+    // Create a cube with specific dimensions based on the chosen blade type
+    string $bladeName = "";
+    if ($bladeType == 0) 
+    {
+        // Create the blade cube and rename it
+        polyCube -width 1 -height 12 -depth 1;
+        $bladeName = "Blade0";
+        rename $bladeName;
+
+        // Move the pivot point to the bottom of blade and move up
+        move -relative 0 -6 0 Blade0.scalePivot Blade0.rotatePivot ;
+        move -relative 0 14 0;
+
+        // Select the walls of the blade and extrude out
+        hilite Blade0.f[4:5] ;
+        selectMode -component ;
+        select -r Blade0.f[4:5] ;
+        polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx 0 -pvy 14 -pvz 0 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 Blade0.f[4:5];
+        setAttr "polyExtrudeFace1.localTranslate" -type double3 0 0 1.5;
+
+        // Select the top middle face of blade and move up and scale down
+        select -replace Blade0.f[1] ;
+        move -relative 0 3 0;
+        scale -r -p 0cm 23.015837cm 0cm 0.368652 1 1 ;
+        
+        // Select the edge faces of the blade and scale down to make the blade sharp
+        select -r Blade0.f[1] Blade0.f[4:5] Blade0.f[8] Blade0.f[12] ;
+        scale -r -p 0cm 15.507918cm 0cm 1 1 0.176715 ;
+
+        // Rounce out the edges and soften
+        performBevelOrChamfer;
+        polyBevel3 -fraction 0.5 -offsetAsFraction 1 -autoFit 1 -depth 1 -mitering 0 -miterAlong 0 -chamfer 1 -segments 1 -worldSpace 1 -smoothingAngle 30 -subdivideNgons 1 -mergeVertices 1 -mergeVertexTolerance 0.0001 -miteringAngle 180 -angleTolerance 180 -ch 1 Blade0;
+        polySoftEdge -a 180 -ch 1 Blade0;
+
+        //start the $createHandle after the blade has been made
+        createHandle();
+    } 
+    else if ($bladeType == 1) 
+    {
+        // Create the blade cube and rename it
+        polyCube -width 1 -height 15 -depth 0.5;
+        $bladeName = "Blade1";
+        rename $bladeName;
+
+        // Move the pivot point to the bottom of blade and move up
+        move -relative 0 -7.5 0 Blade1.scalePivot Blade1.rotatePivot ;
+        move -relative 0 15.5 0;
+
+        // Select the walls of the blade and extrude out
+        select -r Blade1.f[4:5] ;
+        hilite Blade1.f[4:5] ;
+        selectMode -component ;
+        select -r Blade1.f[4:5] ;
+        polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx 0 -pvy 14 -pvz 0 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 Blade1.f[4:5];
+        setAttr "polyExtrudeFace1.localTranslate" -type double3 0 0 1 ;
+
+        // Select the top middle face of blade and move up and scale down
+        select -replace Blade1.f[1] ;
+        move -relative 0 2.664177 0 ;
+        scale -r -p 1.19209e-07cm 24.164178cm 0cm 0.204861 1 1 ;
+
+        // Select the edge faces of the blade and scale down to make the blade sharp
+        select -r Blade1.f[1] Blade1.f[4:5] Blade1.f[8] Blade1.f[12] ;
+        scale -r -p 0cm 15.332089cm 0cm 1 1 0.200757 ;
+
+        // Rounce out the edges and soften
+        performBevelOrChamfer;
+        polyBevel3 -fraction 0.5 -offsetAsFraction 1 -autoFit 1 -depth 1 -mitering 0 -miterAlong 0 -chamfer 1 -segments 1 -worldSpace 1 -smoothingAngle 30 -subdivideNgons 1 -mergeVertices 1 -mergeVertexTolerance 0.0001 -miteringAngle 180 -angleTolerance 180 -ch 1 Blade1;
+        polySoftEdge -a 180 -ch 1 Blade1;
+
+        //start the $createHandle after the blade has been made
+        createHandle();
+    } 
+    else if ($bladeType == 2) 
+    {
+        // Create the blade cube and rename it
+        polyCube -width 1 -height 10 -depth 0.7;
+        $bladeName = "Blade2"; 
+        rename $bladeName;
+
+        // Move the pivot point to the bottom of blade and move up
+        move -relative 0 -5 0 Blade2.scalePivot Blade2.rotatePivot ;
+        move -relative 0 13 0;
+
+        // Select the walls of the blade and extrude out
+        select -r Blade2.f[4:5] ;
+        hilite Blade2.f[4:5] ;
+        selectMode -component ;
+        select -r Blade2.f[4:5] ;
+        polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx 0 -pvy 13 -pvz 0 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 Blade2.f[4:5];
+        setAttr "polyExtrudeFace1.localTranslate" -type double3 0 0 1.5 ;
+
+        // Select the top middle face of blade and move up and scale down
+        select -r Blade2.f[1] ;
+        move -r 0 1.799037 0 ;
+        scale -r -p 0cm 19.799037cm 0cm 0.371345 1 1 ;
+
+        // Select the edge faces of the blade and scale down to make the blade sharp
+        select -r Blade2.f[1] Blade2.f[4:5] Blade2.f[8] Blade2.f[12] ;
+        scale -r -p 0cm 13.899518cm 0cm 1 1 0.313076 ;
+
+        // Soften the blade edges
+        performBevelOrChamfer;
+        polyBevel3 -fraction 0.5 -offsetAsFraction 1 -autoFit 1 -depth 1 -mitering 0 -miterAlong 0 -chamfer 1 -segments 1 -worldSpace 1 -smoothingAngle 30 -subdivideNgons 1 -mergeVertices 1 -mergeVertexTolerance 0.0001 -miteringAngle 180 -angleTolerance 180 -ch 1 Blade2;
+        polySoftEdge -a 180 -ch 1 Blade2;
+
+        //start the $createHandle after the blade has been made
+        createHandle();
+    } 
+    else 
+    {
+        // Default case if an invalid choice is made
+        warning("Invalid blade type selected.");
+        $bladeName = "UnknownBlade";
+    }
+}
+
+global proc createHandle()
+{
+    global int $handleType; //Access the global $handleType variable
+
+
+    // Create a cube with specific dimensions based on the chosen handle type
+    string $handleName = "";
+    if ($handleType == 0) 
+    {
+        // Create the handle cube and rename it
+        polyCube -width 7 -height 2 -depth 2;
+        $handleName = "Handle0";
+        rename $handleName;
+
+        // Move cube up and extrude side out
+        move -r 0 7.5 0 ;
+        select -r Handle0.f[4:5] ;
+        polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx 0 -pvy 7.488741531 -pvz 0 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 Handle0.f[4:5];
+        setAttr "polyExtrudeFace2.localTranslate" -type double3 0 0 0.77204 ;
+        scale -r -p 0cm 7.488741cm 0cm 1 0.589676 0.589676 ;
+        scale -r -p 0cm 7.488741cm 0cm 0.917993 1 1 ;
+        
+        // Select front and back of handle top and extrude out
+        select -r Handle0.f[0] Handle0.f[2] ;
+        polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx -2.384185791e-07 -pvy 7.488741293 -pvz 0 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 Handle0.f[0] Handle0.f[2];
+        setAttr "polyExtrudeFace3.localTranslate" -type double3 0 0 0.389829 ;
+        scale -r -p -2.38419e-07cm 7.488741cm 0cm 0.804888 0.804888 1 ;
+
+        // Select bottom of handle and extrude in
+        hilite Handle0.f[3] ;
+        selectMode -component ;
+        select -r Handle0.f[3] ;
+        polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx -2.384185791e-07 -pvy 6.488741531 -pvz 0 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 Handle0.f[3];
+        scale -r -p 0cm 6.488741cm 0cm 0.250169 1 1 ;
+        scale -r -p 0cm 6.488741cm 0cm 1 1 0.58487 ;
+
+        // Extrude new bottom face down to form the grip
+        select -r Handle0.f[3] ;
+        polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx 1.430511475e-06 -pvy 6.488740577 -pvz -8.344650269e-07 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 Handle0.f[3];
+        move -r 0 -0.921734 0 ;
+        scale -r -p 1.43051e-06cm 5.567006cm -8.34465e-07cm 0.829437 1 0.829437 ;
+        select -r Handle0.f[3] ;
+        polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx 1.430511475e-06 -pvy 5.567006364 -pvz -8.344650269e-07 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 Handle0.f[3];
+        setAttr "polyExtrudeFace6.localTranslate" -type double3 0 0 1.125988 ;
+        scale -r -p 1.43051e-06cm 4.441018cm -8.34465e-07cm 1.193715 1 1.193715 ;
+        select -r Handle0.f[3] ;
+        polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx 1.430511475e-06 -pvy 4.441018238 -pvz -8.344650269e-07 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 Handle0.f[3];
+        setAttr "polyExtrudeFace7.localTranslate" -type double3 0 0 1.285748 ;
+        scale -r -p 1.43051e-06cm 3.15527cm -8.34465e-07cm 0.731373 1 0.731373 ;
+        select -r Handle0.f[3] ;
+        polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx 1.430511475e-06 -pvy 3.155269756 -pvz -8.344650269e-07 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 Handle0.f[3];
+        setAttr "polyExtrudeFace8.localTranslate" -type double3 0 0 1.553452 ;
+        scale -r -p 1.43051e-06cm 1.601818cm -8.34465e-07cm 1.31369 1 1.31369 ;
+
+        // Extrude bottom face out and down to make the bottom block
+        select -r Handle0.f[3] ;
+        polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx 1.430511475e-06 -pvy 1.601818218 -pvz -8.344650269e-07 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 Handle0.f[3];
+        scale -r -p 1.43051e-06cm 1.601818cm -8.34465e-07cm 1.637903 1 1.637903 ;
+        select -r Handle0.f[3] ;
+        polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx 1.430511475e-06 -pvy 1.601818218 -pvz -8.344650269e-07 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 Handle0.f[3];
+        setAttr "polyExtrudeFace10.localTranslate" -type double3 0 0 1.353777 ;
+
+        // Round out the bottom block
+        select -r Handle0.f[3] ;
+        polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx 1.430511475e-06 -pvy 0.2480408094 -pvz -8.344650269e-07 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 Handle0.f[3];
+        setAttr "polyExtrudeFace11.localTranslate" -type double3 0 0 0.228905 ;
+        scale -r -p 1.43051e-06cm 0.0191361cm -8.34465e-07cm 0.671246 1 0.671246 ;
+        select -r Handle0.f[47] Handle0.f[49] ;
+        polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx 1.430511475e-06 -pvy 0.9249295137 -pvz -8.344650269e-07 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 Handle0.f[47] Handle0.f[49];
+        setAttr "polyExtrudeFace12.localTranslate" -type double3 0 0 0.184369 ;
+        performBevelOrChamfer;
+        polyBevel3 -fraction 0.5 -offsetAsFraction 1 -autoFit 1 -depth 1 -mitering 0 -miterAlong 0 -chamfer 1 -segments 1 -worldSpace 1 -smoothingAngle 30 -subdivideNgons 1 -mergeVertices 1 -mergeVertexTolerance 0.0001 -miteringAngle 180 -angleTolerance 180 -ch 1 Handle0;
+        polySoftEdge -a 180 -ch 1 Handle0;
+
+        // Clear selection
+        select -cl  ;
+    }
+    else if ($handleType == 1)
+    {
+        // Create the handle cube and rename it
+        polyCube -width 7 -height 2 -depth 2;
+        $handleName = "Handle1";
+        rename $handleName;
+
+        // Move cube up and extrude side out
+        move -r 0 7.5 0 ;
+        select -r Handle1.f[4:5] ;
+        polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx 0 -pvy 7.488741531 -pvz 0 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 Handle1.f[4:5];
+        setAttr "polyExtrudeFace2.localTranslate" -type double3 0 0 0.77204 ;
+        scale -r -p 0cm 7.488741cm 0cm 1 0.589676 0.589676 ;
+        scale -r -p 0cm 7.488741cm 0cm 0.917993 1 1 ;
+        
+        // Select front and back of handle top and extrude out
+        select -r Handle1.f[0] Handle1.f[2] ;
+        polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx -2.384185791e-07 -pvy 7.488741293 -pvz 0 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 Handle1.f[0] Handle1.f[2];
+        setAttr "polyExtrudeFace3.localTranslate" -type double3 0 0 0.389829 ;
+        scale -r -p -2.38419e-07cm 7.488741cm 0cm 0.804888 0.804888 1 ;
+
+        // Select bottom of handle and extrude in
+        hilite Handle1.f[3] ;
+        selectMode -component ;
+        select -r Handle1.f[3] ;
+        polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx -2.384185791e-07 -pvy 6.488741531 -pvz 0 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 Handle1.f[3];
+        scale -r -p 0cm 6.488741cm 0cm 0.250169 1 1 ;
+        scale -r -p 0cm 6.488741cm 0cm 1 1 0.58487 ;
+
+        // Scale hanle down to make it thin then extrude grip down
+        select -r Handle1 ;
+        scale -r 1 0.710594 1 ;
+        hilite Handle1.f[3] ;
+        selectMode -component ;
+        select -r Handle1.f[3] ;
+        polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx 0 -pvy 6.789406057 -pvz 0 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 Handle1.f[3];
+        setAttr "polyExtrudeFace5.localTranslate" -type double3 0 0 5.147324 ;
+        scale -r -p 0cm 1.642082cm 0cm 0.468667 1 0.468667 ;
+
+        // Extrude botom face to build bottom block
+        select -r Handle1.f[3] ;
+        polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx 0 -pvy 1.642082114 -pvz 0 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 Handle1.f[3];
+        scale -r -p 0cm 1.642082cm 0cm 1.740048 1 1.740048 ;
+        select -r Handle1.f[3] ;
+        polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx 0 -pvy 1.642082114 -pvz 0 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 Handle1.f[3];
+        setAttr "polyExtrudeFace7.localTranslate" -type double3 0 0 0.657739 ;
+        scale -r -p 0cm 0.984343cm 0cm 1.296484 1 1.296484 ;
+        select -r Handle1.f[3] ;
+        polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx 0 -pvy 0.9843434482 -pvz 0 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 Handle1.f[3];
+        setAttr "polyExtrudeFace8.localTranslate" -type double3 0 0 0.835278 ;
+        scale -r -p 0cm 0.149065cm 0cm 0.695105 1 0.695105 ;
+
+        // Smooth out the edges
+        performBevelOrChamfer;
+        polyBevel3 -fraction 0.5 -offsetAsFraction 1 -autoFit 1 -depth 1 -mitering 0 -miterAlong 0 -chamfer 1 -segments 1 -worldSpace 1 -smoothingAngle 30 -subdivideNgons 1 -mergeVertices 1 -mergeVertexTolerance 0.0001 -miteringAngle 180 -angleTolerance 180 -ch 1 Handle1;
+        polySoftEdge -a 180 -ch 1 Handle1;
+
+        // Clear selection
+        select -cl  ;
+    }
+    else if ($handleType == 2)
+    {
+        // Create the handle cube and rename it
+        polyCube -width 7 -height 2 -depth 2;
+        $handleName = "Handle2";
+        rename $handleName;
+
+        // Move cube up and extrude side out
+        move -r 0 7.5 0 ;
+        select -r Handle2.f[4:5] ;
+        polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx 0 -pvy 7.488741531 -pvz 0 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 Handle2.f[4:5];
+        setAttr "polyExtrudeFace2.localTranslate" -type double3 0 0 0.77204 ;
+        scale -r -p 0cm 7.488741cm 0cm 1 0.589676 0.589676 ;
+        scale -r -p 0cm 7.488741cm 0cm 0.917993 1 1 ;
+        move -r 0 0.592221 0 ;
+        polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx 0 -pvy 8.087601691 -pvz 0 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 Handle2.f[4:5];
+        scale -r -p 0cm 7.5cm 0cm 1.156095 1 1 ;
+        scale -r -p 0cm 7.5cm 0cm 1 0.395399 0.395399 ;
+        move -r 0 1.322403 0 ;
+
+
+        // Make diamond shape inside of the handle top block
+        select -r Handle2.f[0] Handle2.f[2] ;
+        polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx -1.192092896e-07 -pvy 7.497803211 -pvz 0 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 Handle2.f[0] Handle2.f[2];
+        scale -r -p -1.19209e-07cm 7.497803cm 0cm 0.164703 0.164703 1 ;
+        scale -r -p -1.19209e-07cm 7.497803cm 0cm 1 1 0.56289 ;
+        
+        // Select front and back of handle top and extrude out
+        select -r Handle2.f[0] Handle2.f[2] ;
+        polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx -2.384185791e-07 -pvy 7.488741293 -pvz 0 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 Handle2.f[0] Handle2.f[2];
+        setAttr "polyExtrudeFace3.localTranslate" -type double3 0 0 0.389829 ;
+        scale -r -p -2.38419e-07cm 7.488741cm 0cm 0.804888 0.804888 1 ;
+
+        // Select bottom of handle and extrude in
+        hilite Handle2.f[3] ;
+        selectMode -component ;
+        select -r Handle2.f[3] ;
+        polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx -2.384185791e-07 -pvy 6.488741531 -pvz 0 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 Handle2.f[3];
+        scale -r -p 0cm 6.488741cm 0cm 0.250169 1 1 ;
+        scale -r -p 0cm 6.488741cm 0cm 1 1 0.58487 ;
+
+        // Select botom of handle and extrude down to build grip
+        select -r Handle2.f[3] ;
+        polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx 0 -pvy 6.5 -pvz 0 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 Handle2.f[3];
+        setAttr "polyExtrudeFace7.localTranslate" -type double3 0 0 4.730109 ;
+        scale -r -p 0cm 1.769891cm 0cm 0.572934 1 0.572934 ;
+        select -r Handle2.f[3] ;
+        polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx 0 -pvy 1.769890785 -pvz 0 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 Handle2.f[3];
+        setAttr "polyExtrudeFace8.localTranslate" -type double3 0 0 0.613071 ;
+        scale -r -p 0cm 1.15682cm 0cm 1.883775 1 1.883775 ;
+
+        // Soften the edges after bevel
+        performBevelOrChamfer;
+        polyBevel3 -fraction 0.5 -offsetAsFraction 1 -autoFit 1 -depth 1 -mitering 0 -miterAlong 0 -chamfer 1 -segments 1 -worldSpace 1 -smoothingAngle 30 -subdivideNgons 1 -mergeVertices 1 -mergeVertexTolerance 0.0001 -miteringAngle 180 -angleTolerance 180 -ch 1 Handle2;
+        select -r Handle2 ;
+        select -r Handle2.e[179] ;
+        select -add Handle2.e[160] Handle2.e[165] Handle2.e[171:172] Handle2.e[179:180] Handle2.e[187:188] ;
+        select -tgl Handle2.e[177] ;
+        select -add Handle2.e[18] Handle2.e[58] Handle2.e[82] Handle2.e[106] Handle2.e[167] Handle2.e[169] Handle2.e[177] Handle2.e[185] ;
+        select -tgl Handle2.e[147] ;
+        select -add Handle2.e[34] Handle2.e[66] Handle2.e[94] Handle2.e[126] Handle2.e[135] Handle2.e[137] Handle2.e[147] Handle2.e[153] ;
+        select -tgl Handle2.e[145] ;
+        select -add Handle2.e[128] Handle2.e[133] Handle2.e[139:140] Handle2.e[145] Handle2.e[148] Handle2.e[155:156] ;
+        scale -r -p 0cm 8.085881cm 0cm 1 1.174611 1.174611 ;
+        move -r 0 -0.0591755 0 ;
+        scale -r -p 0cm 8.026705cm 0cm 1.077908 1 1 ;
+
+        // Clear selection
+        select -cl  ;
+    }
+    else 
+    {
+        // Default case if an invalid choice is made
+        warning("Invalid handle type selected.");
+        $handleName = "UnknownHandle";
+    }
+}

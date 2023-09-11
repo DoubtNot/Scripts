@@ -1,0 +1,228 @@
+//create cylinder
+polyCylinder -radius 0.6 -height 5 -subdivisionsX 20 -subdivisionsY 1 -subdivisionsZ 0 -axis 0 1 0 -roundCap 0 -createUVs 3 -constructionHistory 1; 
+move -relative 0 3.5 0;
+
+//select top face and extrude in 
+select -replace pCylinder1.f[21];
+hilite pCylinder1.f[21] ;
+selectMode -component ;
+select -replace pCylinder1.f[21] ;
+polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx -1.192092896e-07 -pvy 6 -pvz -1.788139343e-07 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 pCylinder1.f[21];
+scale -relative -pivot -1.19209e-07cm 6cm -2.98023e-07cm 0.621172 1 0.621172 ;
+
+//select top face and extrude up
+select -replace pCylinder1.f[21];
+hilite pCylinder1.f[21] ;
+selectMode -component ;
+select -replace pCylinder1.f[21] ;
+polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx -1.192092896e-07 -pvy 6 -pvz -1.788139343e-07 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 pCylinder1.f[21];
+move -relative 0 0.25 0;
+
+//select top face and extrude in
+select -replace pCylinder1.f[21];
+hilite pCylinder1.f[21] ;
+selectMode -component ;
+select -replace pCylinder1.f[21] ;
+polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx -1.192092896e-07 -pvy 6 -pvz -1.788139343e-07 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 pCylinder1.f[21];
+scale -relative -pivot -1.19209e-07cm 18.25cm -2.38419e-07cm 0.504494 1 0.504494 ;
+
+//select top face and extrude up
+select -replace pCylinder1.f[21];
+hilite pCylinder1.f[21] ;
+selectMode -component ;
+select -replace pCylinder1.f[21] ;
+polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx -1.192092896e-07 -pvy 6 -pvz -1.788139343e-07 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 pCylinder1.f[21];
+move -relative 0 14 0;
+
+//select top face and extrude in and move up
+select -replace pCylinder1.f[21];
+hilite pCylinder1.f[21] ;
+selectMode -component ;
+select -replace pCylinder1.f[21] ;
+polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx -1.192092896e-07 -pvy 6 -pvz -1.788139343e-07 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 pCylinder1.f[21];
+scale -relative -pivot -9.68575e-08cm 20.25cm -2.08616e-07cm 0.752212 1 0.752212;
+move -relative 0 0.0841929 0 ;
+
+//select top face and extrude in and move up and deselect top face
+select -replace pCylinder1.f[21];
+hilite pCylinder1.f[21] ;
+selectMode -component ;
+select -replace pCylinder1.f[21] ;
+polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx -1.192092896e-07 -pvy 6 -pvz -1.788139343e-07 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 pCylinder1.f[21];
+scale -relative -pivot -9.68575e-08cm 20.25cm -2.08616e-07cm 0.627532 1 0.627532;
+move -relative 0 0.0404052 0;
+select -clear;
+
+//select bottom face and move up
+select -replace pCylinder1.f[20];
+move -relative 0 3.384271 0;
+
+//extrude bottom face down
+select -r pCylinder1.f[20] ;
+polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx -5.960464478e-08 -pvy 4.384270906 -pvz -1.192092896e-07 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 pCylinder1.f[20];
+move -relative 0 -1.804855 0;
+
+//extrude bottom face down
+select -replace pCylinder1.f[20] ;
+polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx -5.960464478e-08 -pvy 4.384270906 -pvz -1.192092896e-07 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 pCylinder1.f[20];
+move -relative 0 -1.866999 0;
+
+//select bottom face and extrude in
+select -replace pCylinder1.f[20] ;
+polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx -5.960464478e-08 -pvy 0.7124166489 -pvz -1.192092896e-07 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 pCylinder1.f[20];
+scale -relative -pivot -5.96046e-08cm 0.712417cm -1.19209e-07cm 0.685704 1 0.685704 ;
+
+//extrude bottom face down
+select -replace pCylinder1.f[20] ;
+polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx -5.960464478e-08 -pvy 4.384270906 -pvz -1.192092896e-07 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 pCylinder1.f[20];
+move -relative 0 -0.151176 0;
+
+//select bottom face and extrude in
+select -replace pCylinder1.f[20] ;
+polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx -5.960464478e-08 -pvy 0.7124166489 -pvz -1.192092896e-07 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 pCylinder1.f[20];
+scale -relative -pivot -5.96046e-08cm 0.561241cm -1.19209e-07cm 0.615561 1 0.615561 ;
+
+//extrude bottom face down
+select -replace pCylinder1.f[20] ;
+polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx -5.960464478e-08 -pvy 4.384270906 -pvz -1.192092896e-07 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 pCylinder1.f[20];
+move -relative 0 -0.0969425 0;
+
+//select top ring of handle and extrude to subdivide
+select -replace pCylinder1.f[0:19] ;
+hilite pCylinder1.f[0:19] ;
+selectMode -component ;
+select -replace pCylinder1.f[0:19] ;
+polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx -5.960464478e-08 -pvy 5.192135245 -pvz -1.192092896e-07 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 pCylinder1.f[0:19];
+scale -relative -pivot -5.96046e-08cm 5.192135cm -1.19209e-07cm 1 0.747981 1 ;
+//scale inward
+scale -relative -pivot -5.96046e-08cm 5.192135cm -1.19209e-07cm 0.810574 1 0.810574 ;
+select -clear;
+
+//select botton ring of handle and extrude to subdivide
+select -replace pCylinder1.f[162:181] ;
+polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx -5.960464478e-08 -pvy 1.645916224 -pvz -1.192092896e-07 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 pCylinder1.f[162:181];
+scale -relative -pivot -5.96046e-08cm 1.645916cm -1.19209e-07cm 1 0.733591 1 ;
+
+//deselect every other face on bottom ring and extrude outward
+select -deselect pCylinder1.f[163] ;
+select -deselect pCylinder1.f[181] ;
+select -deselect pCylinder1.f[179] ;
+select -deselect pCylinder1.f[177] ;
+select -deselect pCylinder1.f[175] ;
+select -deselect pCylinder1.f[173] ;
+select -deselect pCylinder1.f[171] ;
+select -deselect pCylinder1.f[169] ;
+select -deselect pCylinder1.f[167] ;
+select -deselect pCylinder1.f[165] ;
+select -replace pCylinder1.f[162] pCylinder1.f[164] pCylinder1.f[166] pCylinder1.f[168] pCylinder1.f[170] pCylinder1.f[172] pCylinder1.f[174] pCylinder1.f[176] pCylinder1.f[178] pCylinder1.f[180] ;
+polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx -5.960464478e-08 -pvy 1.645916104 -pvz -1.192092896e-07 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 pCylinder1.f[162] pCylinder1.f[164] pCylinder1.f[166] pCylinder1.f[168] pCylinder1.f[170] pCylinder1.f[172] pCylinder1.f[174] pCylinder1.f[176] pCylinder1.f[178] pCylinder1.f[180];
+scale -relative -pivot -5.96046e-08cm 1.645916cm -1.19209e-07cm 1.177721 1 1.177721 ;
+
+//create on button and move into position
+polyCylinder -radius 0.1 -height .15 -subdivisionsX 20 -subdivisionsY 1 -subdivisionsZ 0 -axis 0 1 0 -roundCap 0 -createUVs 3 -constructionHistory 1; 
+move -relative 0 4 0.6 ;
+rotate -relative -objectSpace -forceOrderXYZ 90 0 0 ;
+
+//create off button and move into position
+polyCylinder -radius 0.1 -height .15 -subdivisionsX 20 -subdivisionsY 1 -subdivisionsZ 0 -axis 0 1 0 -roundCap 0 -createUVs 3 -constructionHistory 1; 
+move -relative 0 3.7 0.6 ;
+rotate -relative -objectSpace -forceOrderXYZ 90 0 0 ;
+
+//combine the buttons with the saber. move saber and rotate
+select -replace pCylinder1 pCylinder3 pCylinder2 ;
+polyUnite -ch 1 -mergeUVSets 1 -centerPivot -name pCylinder1 pCylinder1 pCylinder3 pCylinder2;
+move -relative 0 0 8;
+rotate -relative -objectSpace -forceOrderXYZ -120 -0.9 -47 ;
+
+//create cylinder to be sliced by the saber
+polyCylinder -radius 1 -height 9 -subdivisionsX 20 -subdivisionsY 1 -subdivisionsZ 0 -axis 0 1 0 -roundCap 0 -createUVs 3 -constructionHistory 1; 
+move -relative 0 4.5 0;
+select -replace pCylinder5.f[21] ;
+rotate -relative -pivot -1.19209e-07cm 9cm -1.78814e-07cm -objectSpace -forceOrderXYZ 0 0 34.451929 ;
+scale -relative -pivot -1.19209e-07cm 9cm -1.78814e-07cm 1.211111 1 1 ;
+
+//select the bottom tube and duplicate to rotate above to make the top tube
+select -replace pCylinder5 ;
+duplicate -returnRootsOnly;
+rotate -relative -objectSpace -forceOrderXYZ 15 0 167;
+move -relative -1.7 9.5 0 ;
+
+//select bottom face of bottom tube to lift it up then extrude out
+select -replace pCylinder5.f[20] ;
+move -relative 0 3.340569 0 ;
+hilite pCylinder5.f[20] ;
+selectMode -component ;
+select -replace pCylinder5.f[20] ;
+polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx -1.192092896e-07 -pvy 3.340568781 -pvz -1.788139343e-07 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 pCylinder5.f[20];
+scale -relative -pivot -1.19209e-07cm 3.340569cm -2.38419e-07cm 1.704529 1 1.704529 ;
+
+//extrude bottom face down
+select -replace pCylinder5.f[20] ;
+polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx -1.192092896e-07 -pvy 3.340569019 -pvz -1.192092896e-07 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 pCylinder5.f[20];
+move -r 0 -0.676177 0 ;
+
+//extrude bottom face out
+select -replace pCylinder5.f[20] ;
+polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx -1.192092896e-07 -pvy 2.664392233 -pvz -1.192092896e-07 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 pCylinder5.f[20];
+scale -relative -pivot -1.19209e-07cm 2.664392cm -1.19209e-07cm 1.639593 1 1.639593 ;
+
+//extrude bottom face down
+select -r pCylinder5.f[20] ;
+polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx -1.192092896e-07 -pvy 2.664392233 -pvz -1.192092896e-07 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 pCylinder5.f[20];
+move -r 0 -2.663544 0 ;
+
+//smooth bottom ring on hit target
+polySoftEdge -a 180 -ch 1 pCylinder5.f[82:101];
+
+//soften edges on top and bottom
+//top
+polySoftEdge -a 0 -ch 1 pCylinder5.e[142] pCylinder5.e[144] pCylinder5.e[146] pCylinder5.e[148] pCylinder5.e[150] pCylinder5.e[152] pCylinder5.e[154] pCylinder5.e[156] pCylinder5.e[158] pCylinder5.e[160] pCylinder5.e[162] pCylinder5.e[164] pCylinder5.e[166] pCylinder5.e[168] pCylinder5.e[170] pCylinder5.e[172] pCylinder5.e[174] pCylinder5.e[176] pCylinder5.e[178:179];
+//bottom
+polySoftEdge -a 0 -ch 1 pCylinder5.e[182] pCylinder5.e[184] pCylinder5.e[186] pCylinder5.e[188] pCylinder5.e[190] pCylinder5.e[192] pCylinder5.e[194] pCylinder5.e[196] pCylinder5.e[198] pCylinder5.e[200] pCylinder5.e[202] pCylinder5.e[204] pCylinder5.e[206] pCylinder5.e[208] pCylinder5.e[210] pCylinder5.e[212] pCylinder5.e[214] pCylinder5.e[216] pCylinder5.e[218:219];
+//small ring above bottom
+polySoftEdge -a 180 -ch 1 pCylinder5.e[100:101] pCylinder5.e[103] pCylinder5.e[105] pCylinder5.e[107] pCylinder5.e[109] pCylinder5.e[111] pCylinder5.e[113] pCylinder5.e[115] pCylinder5.e[117] pCylinder5.e[119] pCylinder5.e[121] pCylinder5.e[123] pCylinder5.e[125] pCylinder5.e[127] pCylinder5.e[129] pCylinder5.e[131] pCylinder5.e[133] pCylinder5.e[135] pCylinder5.e[137];
+
+//soften edges on blade and handle
+//blade
+polySoftEdge -a 180 -ch 1 pCylinder4.e[160:279];
+//handle
+polySoftEdge -a 180 -ch 1 pCylinder4.e[80:81] pCylinder4.e[83] pCylinder4.e[85] pCylinder4.e[87] pCylinder4.e[89] pCylinder4.e[91] pCylinder4.e[93] pCylinder4.e[95] pCylinder4.e[97] pCylinder4.e[99] pCylinder4.e[101] pCylinder4.e[103] pCylinder4.e[105] pCylinder4.e[107] pCylinder4.e[109] pCylinder4.e[111] pCylinder4.e[113] pCylinder4.e[115] pCylinder4.e[117] pCylinder4.e[280:319] pCylinder4.e[380:381] pCylinder4.e[383] pCylinder4.e[385] pCylinder4.e[387] pCylinder4.e[389] pCylinder4.e[391] pCylinder4.e[393] pCylinder4.e[395] pCylinder4.e[397] pCylinder4.e[399] pCylinder4.e[401] pCylinder4.e[403] pCylinder4.e[405] pCylinder4.e[407] pCylinder4.e[409] pCylinder4.e[411] pCylinder4.e[413] pCylinder4.e[415] pCylinder4.e[417] pCylinder4.e[460:461] pCylinder4.e[463] pCylinder4.e[465] pCylinder4.e[467] pCylinder4.e[469] pCylinder4.e[471] pCylinder4.e[473] pCylinder4.e[475] pCylinder4.e[477] pCylinder4.e[479] pCylinder4.e[481] pCylinder4.e[483] pCylinder4.e[485] pCylinder4.e[487] pCylinder4.e[489] pCylinder4.e[491] pCylinder4.e[493] pCylinder4.e[495] pCylinder4.e[497] pCylinder4.e[500:501] pCylinder4.e[503:505] pCylinder4.e[507:508] pCylinder4.e[510:511] pCylinder4.e[513] pCylinder4.e[515:516] pCylinder4.e[518] pCylinder4.e[520:521] pCylinder4.e[523] pCylinder4.e[525:526] pCylinder4.e[528] pCylinder4.e[530:531] pCylinder4.e[533] pCylinder4.e[535:536] pCylinder4.e[538] pCylinder4.e[540:541] pCylinder4.e[543] pCylinder4.e[545:546] pCylinder4.e[548] pCylinder4.e[550:551] pCylinder4.e[553] pCylinder4.e[555:556] pCylinder4.e[558] pCylinder4.e[560:561] pCylinder4.e[563] pCylinder4.e[565:566] pCylinder4.e[568] pCylinder4.e[570:571] pCylinder4.e[573] pCylinder4.e[575:576] pCylinder4.e[578] pCylinder4.e[580:581] pCylinder4.e[583] pCylinder4.e[585:586] pCylinder4.e[588] pCylinder4.e[590:591] pCylinder4.e[593] pCylinder4.e[595:596] pCylinder4.e[600:601] pCylinder4.e[603] pCylinder4.e[605] pCylinder4.e[608] pCylinder4.e[610] pCylinder4.e[613] pCylinder4.e[615] pCylinder4.e[618] pCylinder4.e[620] pCylinder4.e[623] pCylinder4.e[625] pCylinder4.e[628] pCylinder4.e[630] pCylinder4.e[633] pCylinder4.e[635] pCylinder4.e[638] pCylinder4.e[640] pCylinder4.e[643] pCylinder4.e[645] pCylinder4.e[648] pCylinder4.e[650] pCylinder4.e[653] pCylinder4.e[655] pCylinder4.e[658] pCylinder4.e[660] pCylinder4.e[663] pCylinder4.e[665] pCylinder4.e[668] pCylinder4.e[670] pCylinder4.e[673] pCylinder4.e[675] pCylinder4.e[678] pCylinder4.e[680] pCylinder4.e[683] pCylinder4.e[685] pCylinder4.e[688] pCylinder4.e[690] pCylinder4.e[693] pCylinder4.e[695];
+
+//new material for blade
+select -replace pCylinder4.f[21] pCylinder4.f[82:141] ;
+shadingNode -asShader standardSurface;
+sets -renderable true -noSurfaceShader true -empty -name standardSurface2SG;
+connectAttr -force standardSurface2.outColor standardSurface2SG.surfaceShader;
+assignCreatedShader "standardSurface" "" standardSurface2 "pCylinder4.f[21] pCylinder4.f[82:141]";
+setAttr "standardSurface2.baseColor" -type double3 0 0.62012 0.8 ;
+
+//new material for black areas on handle
+shadingNode -asShader lambert;
+sets -renderable true -noSurfaceShader true -empty -name lambert2SG;
+connectAttr -f lambert2.outColor lambert2SG.surfaceShader;
+assignCreatedShader "lambert" "" lambert2 "pCylinder4.f[42:81] pCylinder4.f[162] pCylinder4.f[164] pCylinder4.f[166] pCylinder4.f[168] pCylinder4.f[170] pCylinder4.f[172] pCylinder4.f[174] pCylinder4.f[176] pCylinder4.f[178] pCylinder4.f[180] pCylinder4.f[202:241] pCylinder4.f[342:425]";
+setAttr "lambert2.color" -type double3 0.067 0.067 0.067 ;
+
+//new material for base of the hit target
+shadingNode -asShader lambert;
+sets -renderable true -noSurfaceShader true -empty -name lambert3SG;
+connectAttr -f lambert3.outColor lambert3SG.surfaceShader;
+assignCreatedShader "lambert" "" lambert3 "pCylinder5.f[20] pCylinder5.f[62:101]";
+setAttr "lambert3.color" -type double3 0.067 0.0306009 0.00603 ;
+
+//new material for the ring above base hit target
+shadingNode -asShader lambert;
+sets -renderable true -noSurfaceShader true -empty -name lambert4SG;
+connectAttr -f lambert4.outColor lambert4SG.surfaceShader;
+assignCreatedShader "lambert" "" lambert4 "pCylinder5.f[22:61]";
+setAttr "lambert4.color" -type double3 0.0451 0.024 0.0097 ;
+
+//new base color
+setAttr "standardSurface1.baseColor" -type double3 0.5783 0.5783 0.5783 ;
+
+//new material for hit target
+shadingNode -asShader lambert;
+sets -renderable true -noSurfaceShader true -empty -name lambert5SG;
+connectAttr -f lambert5.outColor lambert5SG.surfaceShader;
+assignCreatedShader "lambert" "" lambert5 "pCylinder6.f[0:21] pCylinder5.f[0:19] pCylinder5.f[21]";
+setAttr "lambert5.color" -type double3 0.4398 0.3892 0.1897 ;
