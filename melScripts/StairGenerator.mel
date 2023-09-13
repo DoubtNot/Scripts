@@ -1,0 +1,67 @@
+
+
+
+/*                                    Instructions                                          */
+
+
+
+float $stepWidth = 6; // Define how wide you want the step
+float $stepHeight = 1; // Define how tall you want the step
+float $stepDepth = 2; // Define the depth of the step
+
+int $numCubes = 50; // Define the number of steps you want to create
+
+// Once the above values have been set, highlight the entire code and send to Maya
+
+
+
+
+
+/*                              Cool code stuff happens below                              */
+
+
+
+
+
+// Set initial position and rotation of first step
+float $stepRotationY = 0; 
+float $stepPositionY = 0;
+
+// Global function that handles the for loop creating the staircase 
+global proc stepCreate()
+{
+    global float $stepWidth;
+    global float $stepHeight;
+    global float $stepDepth;
+    global float $stepRotationY;
+    global float $stepPositionY;
+    global int $numCubes;
+
+    for ($i = 0; $i < $numCubes; $i++) 
+    {
+        // Create the first cube
+        polyCube -w $stepWidth -h $stepHeight -d $stepDepth -sx 1 -sy 1 -sz 1 -ax 0 1 0 -cuv 4 -ch 1;
+        move -r 0 ($stepHeight / 2) 0;
+        
+        string $cubeName = "pCube" + ($i + 1);
+
+        // Move the pivot point to the side edge
+        xform -rp ($stepWidth/2) 0 0 -ws $cubeName;
+        xform -sp ($stepWidth/2) 0 0 -ws $cubeName;
+
+        // Rotate the cube around the side edge
+        rotate -r -os -fo 0 $stepRotationY 0;
+        move -r 0 $stepPositionY 0;
+
+        // Increase position and rotation for next step
+        $stepRotationY -= 30;
+        $stepPositionY += $stepHeight;
+    }
+}
+
+//Create a pole to go up the center of the staircase
+polyCylinder -r ($stepDepth / 2) -h ($stepHeight * $numCubes) -sx 20 -sy 1 -sz 1 -ax 0 1 0 -rcp 0 -cuv 3 -ch 1;
+move -r ($stepWidth / 2) (($stepHeight * $numCubes) / 2) 0;
+
+// Call the function "stepCreate" to build the staircase
+stepCreate();
