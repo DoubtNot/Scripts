@@ -1,0 +1,96 @@
+// Function to calculate the result based on the operation
+global proc float calculateResult(float $numbers[], string $operation) {
+    float $result = 0;
+
+
+    // Calculate the mean (average) for the "Mean" operation
+    if ($operation == "Mean") {
+        if (size($numbers) == 0) {
+            print ("Error: No numbers provided for mean calculation.");
+            return 0;
+        }
+
+        for ($num in $numbers) {
+            $result += $num;
+        }
+        $result /= size($numbers);
+    } else if ($operation == "Median") {
+        // Calculate the median for the "Median" operation
+        int $numCount = size($numbers);
+        if ($numCount == 0) {
+            print ("Error: No numbers provided for median calculation.");
+            return 0;
+        }
+
+        // Sort the numbers in ascending order
+        float $sortedNumbers[] = `sort $numbers`;
+
+        // Calculate the median based on the number count
+        if ($numCount % 2 == 0) {
+            int $mid = $numCount / 2;
+            $result = ($sortedNumbers[$mid - 1] + $sortedNumbers[$mid]) / 2.0;
+        } else {
+            int $mid = ($numCount - 1) / 2;
+            $result = $sortedNumbers[$mid];
+        }
+    } else {
+        // Loop through the numbers and perform the selected operation
+        if ($operation == "Add") {
+            for ($num in $numbers) {
+                $result += $num;
+            }
+        } else if ($operation == "Subtract") {
+            $result = $numbers[0]; // Initialize result with the first number
+            for ($i = 1; $i < size($numbers); $i++) {
+                $result -= $numbers[$i];
+            }
+        } else if ($operation == "Multiply") {
+            $result = 1.0; // Initialize result with 1 for multiplication
+            for ($num in $numbers) {
+                $result *= $num;
+            }
+        } else if ($operation == "Divide") {
+            $result = $numbers[0]; // Initialize result with the first number
+            for ($i = 1; $i < size($numbers); $i++) {
+                if ($numbers[$i] != 0) {
+                    $result /= $numbers[$i];
+                } else {
+                    print ("Error: Division by zero!");
+                    return 0; // Return 0 for division by zero
+                }
+            }
+        } else if ($operation == "Power") {
+            if (size($numbers) != 2) {
+                print ("Error: Exponentiation requires exactly two numbers.");
+                return 0;
+            }
+            $result = pow($numbers[0], $numbers[1]);
+        }
+    }
+
+    return $result;
+}
+
+// Example usage:
+string $operation = "Median"; // Change to "Add", "Subtract", "Multiply", "Divide", "Power", "Mean", or "Median"
+float $numbers[] = {2.5, 6, 6.3, 6.7, 9, 2}; // Replace with your numbers
+
+float $result = calculateResult($numbers, $operation);
+
+if ($result != 0) {
+    if ($operation == "Add") {
+        print ("The sum is: " + $result);
+    } else if ($operation == "Subtract") {
+        print ("The result of subtraction is: " + $result);
+    } else if ($operation == "Multiply") {
+        print ("The product is: " + $result);
+    } else if ($operation == "Divide") {
+        print ("The result of division is: " + $result);
+    } else if ($operation == "Power") {
+        print ($numbers[0] + " to the power of " + $numbers[1] + " is: " + $result);
+    } else if ($operation == "Mean") {
+        print ("The mean (average) is: " + $result);
+    } else if ($operation == "Median") {
+        print ("The median is: " + $result);
+    }
+}

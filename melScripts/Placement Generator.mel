@@ -1,0 +1,29 @@
+
+
+
+proc placementGenerator(float $xMin, float $xMax, float $yMin, float $yMax, float $zMin, float $zMax, int $numDups)
+{
+    string $sels[] = `ls -selection`;
+
+    //loop through each object(s)
+    for ($i = 0; $i < size($sels); $i++)
+    {
+        //perform actions for each objects individually
+        for($j = 0; $j < $numDups; $j++)
+        {
+            //duplicate current object 
+            string $dups[] = `duplicate -rr $sels[$i]`;
+            string $dup = $dups[0];
+
+            //generate new x y z value based on range arguments
+            float $randX = `rand $xMin $xMax`;
+            float $randY = `rand $yMin $yMax`;
+            float $randZ = `rand $zMin $zMax`;
+
+            //translate object to new location
+            xform -worldSpace -translation $randX $randY $randZ $dup;
+        }
+    }
+}
+
+placementGenerator(-10, 30, 20, 50, 60, 10, 45);
