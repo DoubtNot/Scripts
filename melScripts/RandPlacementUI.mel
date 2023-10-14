@@ -1,0 +1,59 @@
+global proc randomPlacement(int $numDuplicates, float $minX, float $maxX, float $minY, float $maxY, float $minZ, float $maxZ)
+{
+    string $sels[] = `ls -sl`;  // Get currently selected objects
+
+    if (size($sels) == 0)
+    {
+        error "Make a selection before running RandomPlacement();";
+    }
+
+    for ($i = 0; $i < size($sels); $i++)  // Loop through each selected object
+    {
+        for ($j = 0; $j < $numDuplicates; $j++)  // Perform the following code block on each object, $numDuplicates times
+        {
+            string $dups[] = `duplicate -rr $sels[$i]`;  // Duplicate the indicated selected object
+            string $dup = $dups[0];  // Assign the duplicate to a string variable
+
+            // Generate random position within specified ranges
+            float $randX = rand($minX, $maxX);
+            float $randY = rand($minY, $maxY);
+            float $randZ = rand($minZ, $maxZ);
+
+            // Set the position of the duplicate to the random values
+            xform -worldSpace -translation $randX $randY $randZ $dup;
+        }
+    }
+}
+
+// Create a simple UI window for the randomPlacement procedure
+if (`window -exists randomPlacementWindow`) {
+    deleteUI randomPlacementWindow;
+}
+
+window -title "Random Placement" randomPlacementWindow;
+columnLayout randomPlacementLayout;
+
+text -label "How Many Duplicates Ya Want?";
+intField randomPlacementNumDuplicates;
+text -label "X Range";
+floatFieldGrp -numberOfFields 2 -label "Min/Max" -value1 0 -value2 10 randomPlacementXRange;
+text -label "Y Range";
+floatFieldGrp -numberOfFields 2 -label "Min/Max" -value1 0 -value2 10 randomPlacementYRange;
+text -label "Z Range";
+floatFieldGrp -numberOfFields 2 -label "Min/Max" -value1 0 -value2 10 randomPlacementZRange;
+
+text -label "Don't forget to select the object(s) you want to duplicate."; // Added message
+
+button -label "Place Em' Baby!" -width 400 -height 50 -command "randomPlacementCommand";
+
+showWindow randomPlacementWindow;
+
+global proc randomPlacementCommand()
+{
+    int $numDuplicates = `intField -q -value randomPlacementNumDuplicates`;
+    float $xRange[2] = `floatFieldGrp -q -value randomPlacementXRange`;
+    float $yRange[2] = `floatFieldGrp -q -value randomPlacementYRange`;
+    float $zRange[2] = `floatFieldGrp -q -value randomPlacementZRange`;
+
+    randomPlacement($numDuplicates, $xRange[0], $xRange[1], $yRange[0], $yRange[1], $zRange[0], $zRange[1]);
+}

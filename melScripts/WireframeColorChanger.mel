@@ -1,0 +1,14 @@
+
+
+
+//find selected objects
+
+proc wireframeColorChanger()  
+{  
+    //use for loop to change all selected 
+    string $sels[] = `ls -selection`;
+    setAttr "pSphereShape1.overrideEnabled" 1;
+    setAttr "pSphereShape1.overrideColor" 28;
+}
+
+//change wireframe color on shape node to color (0-31)

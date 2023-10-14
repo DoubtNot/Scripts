@@ -1,0 +1,159 @@
+if (`window -exists calculatorWindow`) {
+    deleteUI calculatorWindow;
+}
+
+window -title "Calculator" calculatorWindow;
+columnLayout calculatorLayout;
+
+textField -height 50 -width 400 calculatorField;
+
+rowColumnLayout -numberOfColumns 4 
+    -columnWidth 1 100
+    -columnWidth 2 100
+    -columnWidth 3 100
+    -columnWidth 4 100;
+
+button -label "1" -height 50 -bgc 0 0 0 -command "showOnField(1)";
+button -label "2" -bgc 0 0 0 -command "showOnField(2)";
+button -label "3" -bgc 0 0 0 -command "showOnField(3)";
+button -label "+" -bgc 0 1 1 -command "opAddition()";
+
+button -label "4" -height 50 -bgc 0 0 0 -command "showOnField(4)";
+button -label "5" -bgc 0 0 0 -command "showOnField(5)";
+button -label "6" -bgc 0 0 0 -command "showOnField(6)";
+button -label "-" -bgc 0 1 1 -command "opSubtraction()";
+
+button -label "7" -height 50 -bgc 0 0 0 -command "showOnField(7)";
+button -label "8" -bgc 0 0 0 -command "showOnField(8)";
+button -label "9" -bgc 0 0 0 -command "showOnField(9)";
+button -label "*" -bgc 0 1 1 -command "opMultiply()";
+
+text -label ""; // Placeholder for spacing
+button -label "0" -height 50 -bgc 0 0 0 -command "showOnField(0)";
+text -label ""; // Placeholder for spacing
+button -label "/" -bgc 0 1 1 -command "opDivide()";
+
+button -label "C" -width 200 -height 50 -bgc 1 0 1 -command "resetCalculatorField()";
+text -label ""; // Placeholder for spacing
+button -label "=" -width 200 -height 50 -bgc 0 1 0 -command "equals()";
+
+showWindow calculatorWindow;
+
+global string $calculatorExpression = "";
+global float $number = 0;
+global float $newNumber = 0;
+
+int $currentOperation = 2;
+
+
+global proc showOnField(float $num) {
+    global string $calculatorExpression;
+    
+    // Check if the input is a decimal point
+    if ($num == ".") {
+        // Only add the decimal point if it's not already in the expression
+        if (size($calculatorExpression) == 0 || `gmatch $calculatorExpression "\\.$"`) {
+            $calculatorExpression += $num;
+        }
+    } else {
+        $calculatorExpression += $num;
+    }
+
+    textField -e -text $calculatorExpression calculatorField;
+}
+
+
+global proc clearCalculatorField() {
+    global string $calculatorExpression;
+    $calculatorExpression = "";
+    textField -e -text $calculatorExpression calculatorField;
+}
+
+global proc resetCalculatorField() {
+    global string $calculatorExpression;
+    $calculatorExpression = "";
+    textField -e -text $calculatorExpression calculatorField;
+
+    $newNumber = 0;
+    print($newNumber);
+}
+
+global proc opAddition() {
+    global float $number, $newNumber;
+    global int $currentOperation;
+    string $textFieldValue = `textField -q -text calculatorField`;
+    $number = float($textFieldValue);
+    $newNumber = $number;
+    $addition = 1;
+    clearCalculatorField();
+    $currentOperation = 1;
+    print ("Addition is about to go down!");
+}
+
+global proc opSubtraction() {
+    global float $number, $newNumber;
+    global int $currentOperation;
+    string $textFieldValue = `textField -q -text calculatorField`;
+    $number = float($textFieldValue);
+    $newNumber = $number;
+    clearCalculatorField();
+    $currentOperation = 2;
+    print ("Subtraction is all the rage!");
+}
+
+global proc opMultiply() {
+    global float $number, $newNumber;
+    global int $currentOperation;
+    string $textFieldValue = `textField -q -text calculatorField`;
+    $number = float($textFieldValue);
+    $newNumber = $number;
+    clearCalculatorField();
+    $currentOperation = 3;
+    print("New Number: " + $newNumber);
+}
+
+global proc opDivide() {
+    global float $number, $newNumber;
+    global int $currentOperation;
+    string $textFieldValue = `textField -q -text calculatorField`;
+    $number = float($textFieldValue);
+    $newNumber = $number;
+    clearCalculatorField();
+    $currentOperation = 4;
+    print("New Number: " + $newNumber);
+}
+
+global proc equals() {
+    global float $number, $newNumber;
+    global int $currentOperation;
+
+    if ($currentOperation == 1) {
+        string $textFieldValue = `textField -q -text calculatorField`;
+        $number = float($textFieldValue);
+        $newNumber += $number;
+        clearCalculatorField();
+        showOnField($newNumber);
+        print("The sum is " + $newNumber);
+    } else if ($currentOperation == 2) {
+        string $textFieldValue = `textField -q -text calculatorField`;
+        $number = float($textFieldValue);
+        $newNumber -= $number;
+        clearCalculatorField();
+        showOnField($newNumber);
+        print("The difference is " + $newNumber);
+    } else if ($currentOperation == 3) {
+        string $textFieldValue = `textField -q -text calculatorField`;
+        $number = float($textFieldValue);
+        $newNumber *= $number;
+        clearCalculatorField();
+        showOnField($newNumber);
+        print("We timesed to get " + $newNumber);
+    } else if ($currentOperation == 4) {
+        string $textFieldValue = `textField -q -text calculatorField`;
+        $number = float($textFieldValue);
+        $newNumber /= $number;
+        clearCalculatorField();
+        showOnField($newNumber);
+        print("We divided to get " + $newNumber);
+    }
+}
