@@ -3,50 +3,59 @@ using UnityEngine;
 public class BrickParenting : MonoBehaviour
 {
     public GameObject parentCube;
+    public ID idObj;
 
+    public bool scriptEnabled = false;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("TopTrigger"))
+        var tempID = other.GetComponent<IDContainerBehavior>();
+        if (tempID == null)
+            return;
+
+        var otherID = tempID.idObj;
+        if (otherID == idObj && scriptEnabled)
         {
             Transform currentParent = other.transform.parent;
 
-            // Traverse the parent hierarchy until reaching the topmost parent
-            while (currentParent.parent != null)
+            // Traverse the parent hierarchy until reaching the topmost parent with the proper idObj
+            while (currentParent != null)
             {
+                var parentID = currentParent.GetComponent<IDContainerBehavior>();
+                if (parentID != null && parentID.idObj == idObj)
+                    break;
+
                 currentParent = currentParent.parent;
             }
 
-            // Set the entering object as a child of the topmost parent
-            parentCube.transform.parent = currentParent;
+            // Set the entering object as a child of the topmost parent with the proper idObj
+            if (currentParent != null)
+            {
+                parentCube.transform.parent = currentParent;
 
-            Rigidbody parentRigidbody = parentCube.GetComponent<Rigidbody>();
-            parentRigidbody.isKinematic = true;
+                Rigidbody parentRigidbody = parentCube.GetComponent<Rigidbody>();
+                parentRigidbody.isKinematic = true;
+            }
         }
     }
 
-
-    private void OnTriggerExit(Collider other)
+    public void SetEnableTrue()
     {
-        if (other.CompareTag("TopTrigger"))
-        {
+        scriptEnabled = true;
+    }
 
-            // Set the entering object as a child of the specified parentCube
-            parentCube.transform.parent = parentCube.transform;
+    public void SetEnableFalse()
+    {
+        scriptEnabled = false;
+    }
 
-            Rigidbody parentRigidbody = parentCube.GetComponent<Rigidbody>();
+    public void UnParentBrick()
+    {
+        // Set the parent of parentCube to null, making it its own parent again
+        parentCube.transform.parent = null;
 
-            parentRigidbody.isKinematic = false;
-
-        }
+        // Optionally, make the Rigidbody kinematic false if needed
+        Rigidbody parentRigidbody = parentCube.GetComponent<Rigidbody>();
+        parentRigidbody.isKinematic = false;
     }
 }
-
-
-//Rigidbody parentRigidbody = parentCube.GetComponent<Rigidbody>();
-
-//parentRigidbody.isKinematic = true;
-
-//BoxCollider boxCollider = parentCube.GetComponent<BoxCollider>();
-
-//boxCollider.enabled = true;
